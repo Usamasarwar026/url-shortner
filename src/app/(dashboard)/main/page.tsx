@@ -7,7 +7,7 @@ import useMain from "@/hooks/useMain";
 import Image from "next/image";
 import { FaBell } from "react-icons/fa";
 
-export default function main() {
+export default function Main() {
   const { toggleSwitch, isToggled, handleUrl, loading, urlinput, setUrlinput } =
     useMain();
   return (

@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "./useRedux";
-import { useRouter } from "next/navigation";
 import { ForgetPassword } from "@/store/slice/authSlice/authSlice";
 
 const registerSchema = Yup.object({
@@ -15,7 +14,6 @@ export default function useForgetPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const router = useRouter();
   const { loading: reduxLoading } = useAppSelector((state) => state.auth);
 
   const handleUpdatePassword = async (e: React.FormEvent) => {

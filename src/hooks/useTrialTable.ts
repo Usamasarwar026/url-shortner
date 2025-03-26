@@ -11,8 +11,6 @@ export default function useTrialTable() {
     (state: RootState) => state.url
   );
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-  const [editIndex, setEditIndex] = useState<number | null>(null);
-  const [editedUrl, setEditedUrl] = useState<string>("");
   const [editedStatus, setEditedStatus] = useState<"Active" | "Inactive">(
     "Active"
   );
@@ -60,9 +58,6 @@ export default function useTrialTable() {
     handleCopy,
     copiedIndex,
     getFaviconUrl,
-    editIndex,
-    editedUrl,
-    setEditedUrl,
     editedStatus,
     setEditedStatus,
   };

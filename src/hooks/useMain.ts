@@ -1,18 +1,16 @@
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "./useRedux";
+import { useAppDispatch} from "./useRedux";
 import { shortUrl } from "@/store/slice/urlSlice/urlSlice";
 
 export default function useMain() {
   const [isToggled, setIsToggled] = useState(false);
   const { data: session, status } = useSession();
-  // const [shortenedUrl, setShortenedUrl] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [urlinput, setUrlinput] = useState("");
   const dispatch = useAppDispatch();
-//  const urls=useAppSelector(state=>state.url);
   const toggleSwitch = () => {
     setIsToggled(!isToggled);
   };
@@ -35,9 +33,7 @@ export default function useMain() {
 
     try {
       const response = await dispatch(shortUrl({url})).unwrap();
-      // const data = await response.json();
       if (response.success) {
-        // setUrlinput(response.shortenedUrl);
         toast.success("URL shortened successfully!");
       } else {
         setError(response.error || "Failed to shorten URL");
@@ -54,11 +50,9 @@ export default function useMain() {
     toggleSwitch,
     isToggled,
     handleUrl,
-    // shortenedUrl,
     error,
     loading,
     session,
-    // urls,
     status,
     urlinput,
     setUrlinput

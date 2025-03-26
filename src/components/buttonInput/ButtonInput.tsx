@@ -1,9 +1,9 @@
 import { IMAGES } from "@/constant/images";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import Input from "../input/Input";
 import Button from "../button/Button";
-import { FaArrowRight, FaLink } from "react-icons/fa";
+import { FaArrowRight} from "react-icons/fa";
 import { ButtonInputProps } from "@/types/types";
 
 export default function ButtonInput({class1,

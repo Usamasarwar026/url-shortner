@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -59,9 +59,9 @@ export default function useRegister() {
       router.push("/login");
     } catch (error) {
       let errorMessage = "Error processing request";
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
       if (error instanceof Yup.ValidationError) {
         toast.error(error.errors.join(", "));
       } else {

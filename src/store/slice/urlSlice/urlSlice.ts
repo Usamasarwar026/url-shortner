@@ -74,7 +74,7 @@ export const deleteUrl = createAsyncThunk(
   "url/deleteUrl",
   async (shortCode: string , { rejectWithValue }) => {
     try {
-      const response = await axios.delete("/api/deleteUrl", {
+       await axios.delete("/api/deleteUrl", {
         data: { shortCode },
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
@@ -154,7 +154,7 @@ export const urlSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(shortUrl.fulfilled, (state, action) => {
+      .addCase(shortUrl.fulfilled, (state) => {
         state.loading = false;
         
       })

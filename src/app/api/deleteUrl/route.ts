@@ -7,7 +7,7 @@ interface PrismaError extends Error {
   code?: string;
 }
 function isPrismaError(error: Error): error is PrismaError {
-  return 'code' in error;
+  return "code" in error;
 }
 export async function DELETE(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -27,7 +27,7 @@ export async function DELETE(req: NextRequest) {
   }
 
   try {
-    const deletedUrl = await prismadb.shortUrl.delete({
+    await prismadb.shortUrl.delete({
       where: {
         shortCode,
         userId: session.user.id,
@@ -39,7 +39,11 @@ export async function DELETE(req: NextRequest) {
     );
   } catch (error) {
     console.error("[API] Error deleting URL:", error);
-    if (error instanceof Error && isPrismaError(error) && error.code === "P2025") {
+    if (
+      error instanceof Error &&
+      isPrismaError(error) &&
+      error.code === "P2025"
+    ) {
       return NextResponse.json(
         { success: false, message: "URL not found or not authorized" },
         { status: 404 }

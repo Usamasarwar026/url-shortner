@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     const shortenedUrl = `${baseUrl}/${shortCode}`;
     const qrCodeDataUrl = await QRCode.toDataURL(shortenedUrl);
     if (session && session.user?.id) {
-      const shortUrl = await prismadb.shortUrl.create({
+       await prismadb.shortUrl.create({
         data: {
           originalUrl: url,
           shortCode,
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
           { status: 403 }
         );
       }
-      const shortUrl = await prismadb.shortUrl.create({
+       await prismadb.shortUrl.create({
         data: {
           originalUrl: url,
           shortCode,

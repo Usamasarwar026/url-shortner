@@ -2,8 +2,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 
-export async function GET(req: NextRequest, { params }: { params: { shortCode: string } }) {
-  const { shortCode } = params;
+export async function GET(
+  req: NextRequest,
+  { params }: { params:Promise< { shortCode: string } >}) {
+  const  shortCode  = (await params).shortCode;
 
   try {
     const url = await prismadb.shortUrl.findUnique({

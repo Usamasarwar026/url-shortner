@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "./useRedux";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ResetPassword } from "@/store/slice/authSlice/authSlice";
-
 const registerSchema = Yup.object({
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")

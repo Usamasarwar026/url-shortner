@@ -10,7 +10,6 @@ export default function useSlugUrl() {
   const { status } = useSession();
   const [originalUrl, setOriginalUrl] = useState("");
   const [customSlug, setCustomSlug] = useState("");
-  const [error, setError] = useState("");
 
   const handleGenerateSlug = () => {
     setCustomSlug(nanoid(10));
@@ -18,17 +17,14 @@ export default function useSlugUrl() {
 
   const handleShortenUrl = async () => {
     if (!originalUrl) {
-      setError("Please enter a URL");
       toast.error("Please enter a URL");
       return;
     }
     if (status !== "authenticated") {
-      setError("You must be logged in to shorten URLs");
       toast.error("You must be logged in to shorten URLs");
       return;
     }
 
-    setError("");
     try {
       const response = await dispatch(
         shortUrl({ url: originalUrl, customSlug })
@@ -38,7 +34,6 @@ export default function useSlugUrl() {
         setCustomSlug("");
         toast.success("URL shortened successfully!");
       } else {
-        setError(response.message || "Failed to shorten URL");
         toast.error(response.message || "Failed to shorten URL");
       }
     } catch (error) {
@@ -46,7 +41,6 @@ export default function useSlugUrl() {
     if (error instanceof Error) {
       errorMessage = error.message;
     }
-      setError(errorMessage || "An unexpected error occurred");
       toast.error(errorMessage || "Slug alraedy in use");
     }
   };

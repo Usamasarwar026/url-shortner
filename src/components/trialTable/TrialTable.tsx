@@ -14,11 +14,6 @@ export default function TrialTable() {
     handleCopy,
     copiedIndex,
     getFaviconUrl,
-    editIndex,
-    editedUrl,
-    setEditedUrl,
-    editedStatus,
-    setEditedStatus,
   } = useTrialTable();
   return (
     <div className="bg-gray-900 text-white rounded-lg overflow-hidden">
@@ -85,18 +80,9 @@ export default function TrialTable() {
                             "/default-favicon.png";
                         }}
                       />
-                      {editIndex === index ? (
-                        <input
-                          type="text"
-                          value={editedUrl}
-                          onChange={(e) => setEditedUrl(e.target.value)}
-                          className="ml-2 bg-gray-800 text-[#C9CED6] border border-gray-700 rounded px-2 py-1 w-full max-w-xs"
-                        />
-                      ) : (
-                        <span className="ml-2 truncate max-w-xs text-[#C9CED6]">
-                          {link.originalLink}
-                        </span>
-                      )}
+                      <span className="ml-2 truncate max-w-xs text-[#C9CED6]">
+                        {link.originalLink}
+                      </span>
                     </div>
                   </td>
                   <td className="py-4 px-4 text-center">
@@ -119,45 +105,30 @@ export default function TrialTable() {
 
                   <td className="py-4 px-4 text-center">
                     <div className="flex justify-center">
-                      {editIndex === index ? (
-                        <select
-                          value={editedStatus}
-                          onChange={(e) =>
-                            setEditedStatus(
-                              e.target.value as "Active" | "Inactive"
-                            )
-                          }
-                          className="bg-gray-800 text-[#C9CED6] border border-gray-700 rounded px-2 py-1"
-                        >
-                          <option value="Active">Active</option>
-                          <option value="Inactive">Inactive</option>
-                        </select>
-                      ) : (
-                        <span
-                          className={`flex items-center gap-2 ${
-                            link.status === "Active"
-                              ? "text-green-500"
-                              : "text-yellow-500"
-                          }`}
-                        >
-                          {link.status}
-                          {link.status === "Active" ? (
-                            <Image
-                              src={IMAGES.ACTIVE}
-                              alt="active link"
-                              width={35}
-                              height={35}
-                            />
-                          ) : (
-                            <Image
-                              src={IMAGES.INACTIVE}
-                              alt="inactive link"
-                              width={35}
-                              height={35}
-                            />
-                          )}
-                        </span>
-                      )}
+                      <span
+                        className={`flex items-center gap-2 ${
+                          link.status === "Active"
+                            ? "text-green-500"
+                            : "text-yellow-500"
+                        }`}
+                      >
+                        {link.status}
+                        {link.status === "Active" ? (
+                          <Image
+                            src={IMAGES.ACTIVE}
+                            alt="active link"
+                            width={35}
+                            height={35}
+                          />
+                        ) : (
+                          <Image
+                            src={IMAGES.INACTIVE}
+                            alt="inactive link"
+                            width={35}
+                            height={35}
+                          />
+                        )}
+                      </span>
                     </div>
                   </td>
                   <td className="py-4 px-4 text-right text-[#C9CED6]">

@@ -1,5 +1,6 @@
 import ResetForm from "@/components/resetForm/ResetForm";
 import { IMAGES } from "@/constant/images";
+import { Suspense } from "react";
 
 export default function ResetPassword() {
   return (
@@ -22,7 +23,9 @@ export default function ResetPassword() {
         <p className="font-[300] text-[16px] text-center text-[#C9CED6] mx-7">
           You can easily Reset your Password
         </p>
-        <ResetForm/>
+        <Suspense>
+          <ResetForm />
+        </Suspense>
       </div>
     </div>
   );

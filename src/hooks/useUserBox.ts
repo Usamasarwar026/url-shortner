@@ -1,9 +1,9 @@
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useUserBox() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
 

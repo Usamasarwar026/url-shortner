@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "./useRedux";
@@ -18,7 +18,7 @@ export default function useUpdatePassword() {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const {user, loading: reduxLoading} = useAppSelector(state => state.auth)
+  const {loading: reduxLoading} = useAppSelector(state => state.auth)
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();

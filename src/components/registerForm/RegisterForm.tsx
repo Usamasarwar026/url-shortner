@@ -15,7 +15,6 @@ export default function RegisterForm() {
     setConfirmPassword,
     loading,
     handleRegister,
-    user,
   } = useRegister();
   return (
     <>

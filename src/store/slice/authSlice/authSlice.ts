@@ -155,7 +155,7 @@ export const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(ForgetPassword.fulfilled, (state, action) => {
+      .addCase(ForgetPassword.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
       })

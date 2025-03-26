@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { email, username, password, confirmPassword } = body;
+    const { email, username, password } = body;
 
     const existingUser = await prismadb.user.findFirst({
       where: { email },
