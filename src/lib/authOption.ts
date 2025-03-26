@@ -38,16 +38,6 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  cookies: {
-    sessionToken: {
-      name: `__Secure-next-auth.session-token`,
-      options: {
-        path: "/",
-        secure: true,
-        domain: process.env.NEXTAUTH_URL?.replace(/https?:\/\//, "") || null,
-      },
-    },
-  },
   pages: {
     signIn: "/login",
     error: "/login",
