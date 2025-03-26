@@ -2,6 +2,7 @@
 import LoginForm from "@/components/loginForm/LoginForm";
 import { IMAGES } from "@/constant/images";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default function Login() {
   return (
@@ -25,7 +26,9 @@ export default function Login() {
           Linkly is an efficient and easy-to-use URL shortening service that
           streamlines your online experience.
         </p>
+        <Suspense>
         <LoginForm />
+        </Suspense>
       </div>
       <div className="flex justify-center items-center mb-5">
         <Link href="/forgetPassword" className="text-[#144EE3] underline ">
