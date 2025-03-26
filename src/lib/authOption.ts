@@ -38,18 +38,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  cookies: {
-    sessionToken: {
-      name: `__Secure-next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: true, 
-        domain: ".vercel.app", 
-      },
-    },
-  },
+
   pages: {
     signIn: "/login",
     error: "/login",
@@ -85,11 +74,6 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
-    async redirect({ url, baseUrl }) {//
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
-    }//
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
