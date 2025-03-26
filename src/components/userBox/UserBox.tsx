@@ -9,11 +9,12 @@ export default function UserBox() {
     toggleDropdown,
     isDropdownOpen,
     handleEditProfile,
+    handleEditURL,
     handleChangePassword,
     handleLogout,
   } = useUserBox();
   return (
-    <div className="relative text-white border border-[#353C4A] bg-[#181E29] h-20 w-52 rounded-full flex justify-evenly items-center gap-5 px-5">
+    <div className="relative text-white border border-[#353C4A] bg-[#181E29] h-[70px] w-52 rounded-full flex justify-evenly items-center gap-5 px-5">
       <div>
         <div>Welcome</div>
         <div className="text-[16px] font-bold text-center">
@@ -38,6 +39,12 @@ export default function UserBox() {
               className="px-4 py-2 hover:bg-[#353C4A] cursor-pointer text-white"
             >
               Edit Profile
+            </li>
+            <li
+              onClick={handleEditURL}
+              className="px-4 py-2 hover:bg-[#353C4A] cursor-pointer text-white"
+            >
+              Edit URL
             </li>
             <li
               onClick={handleChangePassword}

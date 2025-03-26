@@ -6,7 +6,6 @@ import { sendEmail } from "@/lib/sendEmail";
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
-    console.log("check user")
     const existingUser = await prismadb.user.findUnique({ where: { email } });
     if (!existingUser) {
       return NextResponse.json(
@@ -45,13 +44,17 @@ export async function POST(req: Request) {
       success: true,
       message: "Reset Password link has been sent successfully.",
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Reset password error:", error);
+    let errorMessage = "Error processing request";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
     return NextResponse.json(
       {
         success: false,
         message: "Error processing request",
-        error: error.message,
+        error: errorMessage,
       },
       { status: 500 }
     );

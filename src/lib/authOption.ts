@@ -1,19 +1,19 @@
-import { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
-import prisma from './prismadb'; 
+import { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import prisma from "./prismadb";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Email and password are required');
+          throw new Error("Email and password are required");
         }
 
         const user = await prisma.user.findUnique({
@@ -23,29 +23,33 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user || !user.id || !user.email || !user.password) {
-          throw new Error('Invalid credentials: User not found');
+          throw new Error("Invalid credentials: User not found");
         }
 
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
         if (!isValid) {
-          throw new Error('Invalid password');
+          throw new Error("Invalid password");
         }
 
-        return { id: user.id, email: user.email, name: user.username }; 
+        return { id: user.id, email: user.email, name: user.username };
       },
     }),
   ],
   pages: {
-    signIn: '/login',
+    signIn: "/login",
+    error: "/login",
   },
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.email = user.email; 
+        token.email = user.email;
         token.username = user.username;
       }
       return token;
@@ -67,10 +71,8 @@ export const authOptions: NextAuthOptions = {
       if (dbUser) {
         session.user.name = dbUser.username;
       }
-      console.log("Session callback:", session);
       return session;
-    }
     },
-    secret: process.env.NEXTAUTH_SECRET,
-  
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };

@@ -22,4 +22,17 @@ model User {
   resetTokenExpiry DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  shortUrls ShortUrl[]
+}
+
+model ShortUrl {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  originalUrl  String
+  shortCode    String   @unique
+  clicks       Int      @default(0)
+  userId       String?   
+  status       String   @default("Active")
+  createdAt    DateTime @default(now())
+  qrCode      String?
+  user         User?     @relation(fields: [userId], references: [id])
 }

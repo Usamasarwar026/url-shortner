@@ -21,12 +21,11 @@ export async function PUT(req: Request) {
       );
     }
     const updatedUser = await prisma.user.update({
-      where: { email: session.user.email }, 
+      where: { email: session.user.email },
       data: {
         username,
       },
     });
-    console.log("User updated:", updatedUser);
     return NextResponse.json({
       success: true,
       message: "Profile updated successfully",
@@ -38,9 +37,11 @@ export async function PUT(req: Request) {
     });
   } catch (error) {
     console.error("Raw error:", error);
-    const typedError = error instanceof Error ? error : new Error(String(error || "Unknown error"));
+    const typedError =
+      error instanceof Error
+        ? error
+        : new Error(String(error || "Unknown error"));
     console.error("Typed error details:", typedError);
-    // console.error("Edit profile error:", error);
     return NextResponse.json(
       {
         success: false,

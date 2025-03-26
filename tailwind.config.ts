@@ -16,6 +16,10 @@ export default {
         foreground: "var(--foreground)",
         buttonColor: '#144EE3',
       },
+      boxShadow: {
+        'md': '0 8px 20px rgba(20, 78, 227, 0.4)',  
+        'lg': '0 15px 40px rgba(20, 78, 227, 0.5)',  
+      },
     },
   },
   plugins: [],

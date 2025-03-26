@@ -16,24 +16,21 @@ const profileSchema = Yup.object({
 });
 
 export default function useEditProfile() {
-    const { data: session, update } = useSession();
-    console.log("session in useUserBox=>", session);
+  const { data: session, update } = useSession();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const {user, loading: reduxLoading} = useAppSelector(state => state.auth)
+  const { user, loading: reduxLoading } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (session?.user) {
       setEmail(session.user.email || "");
-      setUsername(session.user.name || ""); 
-      console.log("update the session with new user")
+      setUsername(session.user.name || "");
     } else if (user) {
       setEmail(user.email || "");
       setUsername(user.username || "");
-      console.log("Not update the session with new user")
     }
   }, [session, user]);
 
@@ -45,35 +42,31 @@ export default function useEditProfile() {
 
     try {
       await profileSchema.validate(data, { abortEarly: false });
-      console.log("Data being sent:", data);
 
-
-     const result = await dispatch(
-             EditProfile(data)
-           ).unwrap();
-           console.log("Result:", result);
-           if (!result.success) {
-             toast.error(result.message); 
-             return;
-           }
-           await update({
-            ...session,
-            user: {
-              ...session?.user,
-              email: result.user?.email,
-              username: result.user?.username, 
-            },
-          });
-
-
-          console.log("Session updated with:", { email: result.user?.email, username: result.user?.username });
-             toast.success(result.message || "Profile updated successfully");
-             router.push("/main");
-    } catch (error: any) {
+      const result = await dispatch(EditProfile(data)).unwrap();
+      if (!result.success) {
+        toast.error(result.message);
+        return;
+      }
+      await update({
+        ...session,
+        user: {
+          ...session?.user,
+          email: result.user?.email,
+          username: result.user?.username,
+        },
+      });
+      toast.success(result.message || "Profile updated successfully");
+      router.push("/main");
+    } catch (error) {
+      let errorMessage = "Error processing request";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
       if (error instanceof Yup.ValidationError) {
         toast.error(error.errors.join(", "));
       } else {
-        toast.error(error.message || "An unexpected error occurred");
+        toast.error(errorMessage || "An unexpected error occurred");
       }
     } finally {
       setLoading(false);

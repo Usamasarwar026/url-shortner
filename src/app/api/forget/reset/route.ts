@@ -45,12 +45,16 @@ export async function POST(req: Request) {
       success: true,
       message: "Password reset successfully",
     });
-  } catch (error: any) {
+  } catch (error) {
+    let errorMessage = "Error processing request";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
     return NextResponse.json(
       {
         success: false,
         message: "Error resetting password",
-        error: error.message,
+        error: errorMessage,
       },
       { status: 500 }
     );

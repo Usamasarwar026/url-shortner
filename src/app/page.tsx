@@ -1,20 +1,16 @@
 "use client";
 import Button from "@/components/button/Button";
 import ButtonInput from "@/components/buttonInput/ButtonInput";
-import LinkBox from "@/components/linkBox/LinkBox";
+import TrialTable from "@/components/trialTable/TrialTable";
 import { IMAGES } from "@/constant/images";
+import useHome from "@/hooks/useHome";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { GoQuestion } from "react-icons/go";
 
 export default function Home() {
-  const [isToggled, setIsToggled] = useState(false); 
-
-  const toggleSwitch = () => {
-    setIsToggled(!isToggled);
-  };
-
+  const { toggleSwitch, isToggled, handleUrl, loading, urlinput, setUrlinput } =
+    useHome();
   return (
     <div
       style={{
@@ -42,7 +38,7 @@ export default function Home() {
           <Link href="/register" className="hidden md:block lg:block">
             <Button
               title="Register"
-              className="text-white text-2xl text-[16px] font-semibold  hover:bg-gray-500 bg-buttonColor px-12 py-3 rounded-full"
+              className="text-white text-2xl text-[16px] font-semibold  hover:bg-gray-500 bg-buttonColor px-12 py-3 rounded-full shadow-md"
             />
           </Link>
         </div>
@@ -57,14 +53,22 @@ export default function Home() {
           streamlines your online experience.
         </div>
         <div className=" w-full flex justify-center">
-          <ButtonInput />
+          <ButtonInput
+            class1="block md:hidden"
+            class2="hidden md:block"
+            placeholder="Enter the link here"
+            title="Shorten Now!"
+            onSubmit={handleUrl}
+            disabled={loading}
+            value={urlinput}
+            onChange={setUrlinput}
+          />
         </div>
         <div className="flex items-center">
           <div
             className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer transition-all duration-300 border border-[#353C4A]  bg-[#181E29]`}
             onClick={toggleSwitch}
           >
-            {/* Toggle Circle */}
             <div
               className={`w-6 h-6 bg-[#144EE3] rounded-full shadow-md transition-transform duration-300 ${
                 isToggled ? "translate-x-8" : "translate-x-0"
@@ -75,22 +79,25 @@ export default function Home() {
         </div>
         <div className="flex items-center justify-center flex-wrap px-5">
           <div className="text-white text-center">
-            You can create <span className="text-[#EB568E] font-bold">05</span> more links.
+            You can create <span className="text-[#EB568E] font-bold">05</span>{" "}
+            more links.
           </div>
           <div className="text-white">
-            <Link href="./register" className="mx-1 font-bold underline  md:font-normal md:no-underline">
-              
+            <Link
+              href="./register"
+              className="mx-1 font-bold underline  md:font-normal md:no-underline "
+            >
               Register Now
             </Link>
-             to enjoy Unlimited usage
+            to enjoy Unlimited usage
           </div>
           <div className="hidden md:block ml-2">
             <GoQuestion color="white" />
           </div>
         </div>
       </div>
-      <div className="min-w-[85%] mx-auto mt-10">
-        <LinkBox/>
+      <div className="w-full  rounded-lg p-2 sm:p-4 mx-auto mt-10">
+        <TrialTable />
       </div>
     </div>
   );

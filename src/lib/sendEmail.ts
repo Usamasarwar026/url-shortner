@@ -15,5 +15,4 @@ export async function sendEmail({ to, subject, html }: { to: string; subject: st
     subject,
     html,
   });
-  console.log(`Email sent to ${to}`);
 }

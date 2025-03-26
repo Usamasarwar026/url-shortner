@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "./useRedux";
@@ -7,7 +7,7 @@ import { ResetPassword } from "@/store/slice/authSlice/authSlice";
 
 const registerSchema = Yup.object({
   password: Yup.string()
-    .min(2, "Password must be at least 6 characters")
+    .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
 });
 
@@ -31,9 +31,8 @@ export default function useResetPassword() {
         toast.error("Invalid or missing reset token");
         return;
       }
-      console.log("Data being sent:", { password });
       const result = await dispatch(ResetPassword(data)).unwrap();
-      console.log("Result:", result);
+
       if (!result.success) {
         toast.error(result.message);
         return;
@@ -41,11 +40,15 @@ export default function useResetPassword() {
       toast.success(result.message || "Password Reset successful");
       setPassword("");
       router.push("/login");
-    } catch (error: any) {
+    } catch (error) {
+      let errorMessage = "Error processing request";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
       if (error instanceof Yup.ValidationError) {
         toast.error(error.errors.join(", "));
       } else {
-        toast.error(error.message);
+        toast.error(errorMessage);
       }
     } finally {
       setLoading(false);

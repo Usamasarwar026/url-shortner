@@ -30,11 +30,9 @@ export default function useForgetPassword() {
         { email },
         { abortEarly: false }
       );
-      console.log("Data being sent:", { email });
       const result = await dispatch(
         ForgetPassword(data)
       ).unwrap();
-      console.log("Result:", result);
       if (!result.success) {
         toast.error(result.message); 
         return;
@@ -42,11 +40,15 @@ export default function useForgetPassword() {
       toast.success(result.message || "A reset link has been sent to your email.");
       setEmail("");
       
-    } catch (error: any) {
+    } catch (error) {
+      let errorMessage = "Error processing request";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
       if (error instanceof Yup.ValidationError) {
         toast.error(error.errors.join(", "));
       } else {
-        toast.error(error.message);
+        toast.error(errorMessage);
       }
     } finally {
       setLoading(false);

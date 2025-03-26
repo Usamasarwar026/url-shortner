@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+"use client"
+import { useState } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "./useRedux";
@@ -10,10 +11,10 @@ const registerSchema = Yup.object({
     .email("Invalid email format")
     .required("Email is required"),
   username: Yup.string()
-    .min(3, "Username must be at least 3 characters")
+    .min(6, "Username must be at least 6 characters")
     .required("Username is required"),
   password: Yup.string()
-    .min(2, "Password must be at least 6 characters")
+    .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password")], "Passwords must match")
@@ -28,53 +29,48 @@ export default function useRegister() {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const {user, isAuthenticated, loading: reduxLoading} = useAppSelector(state => state.auth)
-  console.log("user ===>", user)
-  console.log("usergvygvygvgyv", isAuthenticated)
+  const { user, loading: reduxLoading } = useAppSelector((state) => state.auth);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-  const data ={
-    email,
-    username,
-    password,
-    confirmPassword,
-  }
+    const data = {
+      email,
+      username,
+      password,
+      confirmPassword,
+    };
 
     try {
       await registerSchema.validate(
         { email, username, password, confirmPassword },
         { abortEarly: false }
       );
-      console.log("Data being sent:", { email, username, password, confirmPassword });
-      const result = await dispatch(
-        Register(data)
-      ).unwrap();
-      console.log("Result:", result);
+      const result = await dispatch(Register(data)).unwrap();
       if (!result.success) {
-        toast.error(result.message); 
+        toast.error(result.message);
         return;
       }
-        console.log("Authenticated successfully")
-        toast.success(result.message || "Registration successful");
-        setEmail("");
-        setUsername("");
-        setPassword("");
-        setConfirmPassword("");
-        router.push("/login");
-      
-    } catch (error: any) {
+      toast.success(result.message || "Registration successful");
+      setEmail("");
+      setUsername("");
+      setPassword("");
+      setConfirmPassword("");
+      router.push("/login");
+    } catch (error) {
+      let errorMessage = "Error processing request";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
       if (error instanceof Yup.ValidationError) {
         toast.error(error.errors.join(", "));
       } else {
-        toast.error(error.message);
+        toast.error(errorMessage);
       }
     } finally {
       setLoading(false);
     }
   };
- 
 
   return {
     email,
@@ -86,7 +82,7 @@ export default function useRegister() {
     confirmPassword,
     setConfirmPassword,
     handleRegister,
-    loading: loading || reduxLoading, // Combine local and Redux loading
+    loading: loading || reduxLoading,
     user,
   };
 }

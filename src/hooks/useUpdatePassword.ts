@@ -30,11 +30,9 @@ export default function useUpdatePassword() {
         { password, newPassword},
         { abortEarly: false }
       );
-      console.log("Data being sent:", { password,newPassword });
       const result = await dispatch(
         UpdatePassword(data)
       ).unwrap();
-      console.log("Result:", result);
       if (!result.success) {
         toast.error(result.message); 
         return;
@@ -44,11 +42,15 @@ export default function useUpdatePassword() {
       setNewPassword("");
       router.push('/login')
       
-    } catch (error: any) {
+    } catch (error) {
+      let errorMessage = "Error processing request";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
       if (error instanceof Yup.ValidationError) {
         toast.error(error.errors.join(", "));
       } else {
-        toast.error(error.message);
+        toast.error(errorMessage);
       }
     } finally {
       setLoading(false);

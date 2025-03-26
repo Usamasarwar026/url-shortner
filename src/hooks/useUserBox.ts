@@ -4,13 +4,9 @@ import React, { useEffect, useState } from "react";
 
 export default function useUserBox() {
   const { data: session, status } = useSession();
-  console.log("session in useUserBox=>", session, "status=>", status);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    console.log("session updated in useUserBox=>", session); // Log on every session change
-  }, [session]);
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
@@ -18,6 +14,10 @@ export default function useUserBox() {
   const handleEditProfile = () => {
     setIsDropdownOpen(false);
     router.push("/editProfile");
+  };
+  const handleEditURL = () => {
+    setIsDropdownOpen(false);
+    router.push("/slugUrl");
   };
 
   const handleChangePassword = () => {
@@ -34,6 +34,7 @@ export default function useUserBox() {
     toggleDropdown,
     isDropdownOpen,
     handleEditProfile,
+    handleEditURL,
     handleChangePassword,
     handleLogout,
   };

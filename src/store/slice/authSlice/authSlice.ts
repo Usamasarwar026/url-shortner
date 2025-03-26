@@ -1,64 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AuthState, ConfirmResetPasswordData, EditProfileData, EditProfileResponse, RegisterData, RegisterResponse, ResetPasswordData, ResetPasswordResponse, UpdatePasswordData, UpdatePasswordResponse } from "@/types/types";
 
-interface RegisterData {
-  email: string;
-  username: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface RegisterResponse {
-  success: boolean;
-  message: string;
-  user?: {
-    id: string;
-    email: string;
-    username: string;
-  };
-}
-interface AuthState {
-  user: { id: string; email: string; username: string } | null;
-  loading: boolean;
-  error: string | null;
-  isAuthenticated: boolean;
-}
-interface EditProfileData {
-  email: string;
-  username: string;
-}
-
-interface EditProfileResponse {
-  success: boolean;
-  message: string;
-  user: { id: string; email: string; username: string } | null;
-}
-interface ResetPasswordData {
-  email: string;
-}
-
-interface ResetPasswordResponse {
-  success: boolean;
-  message: string;
-}
-interface ConfirmResetPasswordData {
-  token: string | null;
-  password: string;
-}
-
-interface ResetPasswordResponse {
-  success: boolean;
-  message: string;
-}
-interface UpdatePasswordData {
-  password: string;
-  newPassword: string;
-}
-
-interface UpdatePasswordResponse {
-  success: boolean;
-  message: string;
-}
 
 const initialState: AuthState = {
   user: null,
@@ -70,18 +13,17 @@ const initialState: AuthState = {
 export const UpdatePassword = createAsyncThunk(
   "auth/updatePassword",
   async (data: UpdatePasswordData, { rejectWithValue }) => {
-    console.log("data in authslice",data)
     try {
       const response = await axios.post<UpdatePasswordResponse>(
         "/api/updatePassword",
         data,
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log("Update password API response:", response.data);
       return response.data;
-    } catch (error: any) {
-      if (error.response) {
-        return rejectWithValue(error.response.data);
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      if (axiosError.response) {
+        return rejectWithValue(axiosError.response.data);
       }
       return rejectWithValue({ message: "Failed to update password" });
     }
@@ -99,9 +41,10 @@ export const ResetPassword = createAsyncThunk(
         { headers: { "Content-Type": "application/json" } }
       );
       return response.data;
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
       return rejectWithValue(
-        error.response?.data || { message: "Failed to reset password" }
+        axiosError.response?.data || { message: "Failed to reset password" }
       );
     }
   }
@@ -115,11 +58,11 @@ export const ForgetPassword = createAsyncThunk(
         "/api/forget",
         data
       );
-      console.log("API response:", response.data);
       return response.data;
-    } catch (error: any) {
-      if (error.response) {
-        return rejectWithValue(error.response.data);
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      if (axiosError.response) {
+        return rejectWithValue(axiosError.response.data);
       }
       return rejectWithValue({ message: "An unexpected error occurred" });
     }
@@ -137,11 +80,11 @@ export const EditProfile = createAsyncThunk(
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log("API response:", response.data);
       return response.data;
-    } catch (error: any) {
-      if (error.response) {
-        return rejectWithValue(error.response.data);
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      if (axiosError.response) {
+        return rejectWithValue(axiosError.response.data);
       }
       return rejectWithValue({ message: "An unexpected error occurred" });
     }
@@ -152,18 +95,17 @@ export const Register = createAsyncThunk(
   "auth/register",
   async (data: RegisterData, { rejectWithValue }) => {
     try {
-      console.log("Thunk sending data to /api/register:", data);
       const response = await axios.post<RegisterResponse>("/api/register", {
         email: data.email,
         username: data.username,
         password: data.password,
         confirmPassword: data.confirmPassword,
       });
-      console.log("API response:", response.data);
       return response.data;
-    } catch (error: any) {
-      if (error.response) {
-        return rejectWithValue(error.response.data);
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+      if (axiosError.response) {
+        return rejectWithValue(axiosError.response.data);
       }
       return rejectWithValue({ message: "An unexpected error occurred" });
     }
@@ -254,7 +196,5 @@ export const authSlice = createSlice({
       });
   },
 });
-
-// export const {  } = authSlice.actions
 
 export default authSlice.reducer;

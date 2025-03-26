@@ -2,11 +2,10 @@ import { NextResponse } from "next/server";
 import prismadb from "@/lib/prismadb";
 import bcrypt from "bcryptjs";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/authOption"; // Adjust path to your auth config
+import { authOptions } from "@/lib/authOption";
 
 export async function POST(req: Request) {
   try {
-    // Get the authenticated session
     const session = await getServerSession(authOptions);
     if (!session || !session.user?.id) {
       return NextResponse.json(
@@ -16,9 +15,6 @@ export async function POST(req: Request) {
     }
 
     const { password, newPassword } = await req.json();
-    console.log("passwords in API",password)
-    console.log("newpasswords in API",newPassword)
-    // Fetch the user from the database
     const user = await prismadb.user.findUnique({
       where: { id: session.user.id },
     });
@@ -30,7 +26,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify the current password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return NextResponse.json(
@@ -50,10 +45,18 @@ export async function POST(req: Request) {
       success: true,
       message: "Password updated successfully.",
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Update password error:", error);
+    let errorMessage = "Error processing request";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
     return NextResponse.json(
-      { success: false, message: "Error updating password", error: error.message },
+      {
+        success: false,
+        message: "Error updating password",
+        error: errorMessage,
+      },
       { status: 500 }
     );
   }

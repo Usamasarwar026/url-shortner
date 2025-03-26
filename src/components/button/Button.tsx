@@ -1,9 +1,10 @@
+import { ButtonProps } from "@/types/types";
 import React from "react";
 
-export default function Button(props:any) {
+export default function Button({ className, onClick, title }: ButtonProps) {
   return (
-    <button className={`${props.className}`}>
-      {props.title}
+    <button className={`${className}`} onClick={onClick}>
+      {title}
     </button>
   );
 }
