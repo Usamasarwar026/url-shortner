@@ -46,7 +46,9 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token
+      authorized: () => {
+        return true;
+      },
     },
     pages: {
       signIn: "/login",
@@ -68,4 +70,3 @@ export const config = {
     "/resetPassword",
   ],
 };
-
