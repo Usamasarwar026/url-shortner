@@ -60,7 +60,6 @@ export const config = {
   matcher: [
     "/",
     "/main",
-    "/main/:path*",
     "/slugUrl",
     "/editProfile",
     "/updatePassword",

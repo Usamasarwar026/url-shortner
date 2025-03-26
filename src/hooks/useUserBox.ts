@@ -27,7 +27,11 @@ export default function useUserBox() {
 
   const handleLogout = async () => {
     setIsDropdownOpen(false);
-    await signOut({ callbackUrl: "/" });
+    await signOut({ 
+      redirect: false,
+      callbackUrl: "/" 
+    });
+    window.location.href = "/";
   };
   return {
     session,
