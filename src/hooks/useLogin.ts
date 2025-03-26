@@ -11,7 +11,7 @@ const loginSchema = Yup.object({
     .required("Email is required"),
   password: Yup.string()
     .required("Password is required")
-    .min(2, "Password must be at least 2 characters"),
+    .min(6, "Password must be at least 6 characters"),
 });
 
 export default function useLogin() {
