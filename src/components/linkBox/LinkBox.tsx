@@ -330,12 +330,20 @@ export default function LinkBox() {
                       QR Code:
                     </span>
                     {link.qrCode ? (
-                      <Image
-                        src={link.qrCode}
-                        alt="QR Code"
-                        width={40}
-                        height={40}
-                      />
+                      <>
+                        <Image
+                          src={link.qrCode}
+                          alt="QR Code"
+                          width={40}
+                          height={40}
+                          onClick={() => handleCopyQr(link.qrCode, index)}
+                        />
+                        {copiedQrIndex === index && (
+                          <span className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1">
+                            Copied!
+                          </span>
+                        )}
+                      </>
                     ) : (
                       <span className="text-[#C9CED6]">Generating...</span>
                     )}
