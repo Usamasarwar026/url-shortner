@@ -13,7 +13,7 @@ export type LinkData = {
   clicks: number;
   status: "Active" | "Inactive";
   date: string;
-  qrCode?: string;
+  qrCode: string;
 };
 export type Url = {
   shortenedUrl: string;

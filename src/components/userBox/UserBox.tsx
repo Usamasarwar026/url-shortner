@@ -15,10 +15,10 @@ export default function UserBox() {
   } = useUserBox();
 
   return (
-    <div className="relative text-white border border-[#353C4A] bg-[#181E29] h-[70px] w-52 rounded-full flex justify-evenly items-center gap-5 px-5">
+    <div className="relative text-white border border-[#353C4A] bg-[#181E29] h-[55px] w-40 md:h-[70px] md:w-52 rounded-full flex justify-evenly items-center gap-5 px-5">
       <div>
-        <div>Welcome</div>
-        <div className="text-[16px] font-bold text-center">
+        <div className="text-[14px] md:text-[16px] font-bold">Welcome</div>
+        <div className="text-[14px] md:text-[16px] text-center">
           {session?.user?.name ? (
             <p className="text-green-500 ">{session.user.name}</p>
           ) : (
@@ -28,12 +28,12 @@ export default function UserBox() {
       </div>
       <div>
         <button onClick={toggleDropdown} className="focus:outline-none">
-          <IoIosArrowDown size={30} />
+          <IoIosArrowDown size={25} />
         </button>
       </div>
 
       {isDropdownOpen && (
-        <div className="absolute top-20 right-0 mt-2 w-48 bg-[#181E29] border border-[#353C4A] rounded-lg shadow-lg z-10">
+        <div className="absolute top-14 md:top-20 right-0 md:w-48 bg-[#181E29] border border-[#353C4A] rounded-lg z-10">
           <ul className="py-2">
             <li
               onClick={handleEditProfile}

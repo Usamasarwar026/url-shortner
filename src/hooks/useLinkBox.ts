@@ -20,6 +20,9 @@ export default function useLinkBox() {
   const [editedStatus, setEditedStatus] = useState<"Active" | "Inactive">(
     "Active"
   );
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [copiedQrIndex, setCopiedQrIndex] = useState<number | null>(null);
+
   useEffect(() => {
     if (session?.user.id) {
       dispatch(fetchUserUrls());
@@ -32,7 +35,7 @@ export default function useLinkBox() {
     clicks: url.clicks,
     date: url.createdAt,
     status: url.status,
-    qrCode: url.qrCode,
+    qrCode: url.qrCode ?? "",
   }));
 
   const handleCopy = (url: string, index: number) => {
@@ -47,6 +50,20 @@ export default function useLinkBox() {
       });
   };
 
+  const handleCopyQr = (qrCode: string, index: number) => {
+    navigator.clipboard
+      .writeText(qrCode)
+      .then(() => {
+        setCopiedQrIndex(index);
+        toast.success("QR Code URL copied to clipboard!");
+        setTimeout(() => setCopiedQrIndex(null), 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy QR code:", err);
+        toast.error("Failed to copy QR code URL");
+      });
+  };
+
   const handleEdit = (
     index: number,
     originalLink: string,
@@ -55,7 +72,6 @@ export default function useLinkBox() {
     setEditIndex(index);
     setEditedUrl(originalLink);
     setEditedStatus(status);
-    
   };
 
   const handleCancel = () => {
@@ -64,8 +80,7 @@ export default function useLinkBox() {
     setEditedStatus("Active");
   };
 
-
-const handleSave = (shortLink: string) => {
+  const handleSave = (shortLink: string) => {
     const shortCode = shortLink.split("/").pop();
     if (!shortCode) {
       toast.error("Invalid short link format");
@@ -81,13 +96,13 @@ const handleSave = (shortLink: string) => {
       if (editUrl.fulfilled.match(result)) {
         toast.success("URL updated successfully");
         setEditIndex(null);
-        dispatch(fetchUserUrls()); // Optional: Sync with server
+        dispatch(fetchUserUrls());
       } else {
-        toast.error(result.payload as string || "Failed to edit URL");
+        toast.error((result.payload as string) || "Failed to edit URL");
       }
     });
   };
-  
+
   const handleDelete = (shortLink: string) => {
     if (window.confirm(`Are you sure you want to delete ${shortLink}?`)) {
       const shortCode = shortLink.split("/").pop();
@@ -98,9 +113,9 @@ const handleSave = (shortLink: string) => {
       dispatch(deleteUrl(shortCode)).then((result) => {
         if (deleteUrl.fulfilled.match(result)) {
           toast.success("URL deleted successfully");
-          dispatch(fetchUserUrls()); 
+          dispatch(fetchUserUrls());
         } else {
-          toast.error(result.payload as string || "Failed to delete URL");
+          toast.error((result.payload as string) || "Failed to delete URL");
         }
       });
     }
@@ -116,6 +131,9 @@ const handleSave = (shortLink: string) => {
       console.error("Invalid URL:", url, error);
       return "/default-favicon.png";
     }
+  };
+  const toggleExpand = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
   };
 
   const isLoggedIn = !!session?.user;
@@ -136,5 +154,9 @@ const handleSave = (shortLink: string) => {
     handleEdit,
     handleSave,
     getFaviconUrl,
+    toggleExpand,
+    expandedIndex,
+    handleCopyQr,
+    copiedQrIndex,
   };
 }

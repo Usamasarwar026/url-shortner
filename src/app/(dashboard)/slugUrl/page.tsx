@@ -22,7 +22,7 @@ export default function SlugUrl() {
           <div>
             <UserBox />
           </div>
-          <div className="bg-[#144EE3] p-4 rounded-full">
+          <div className="hidden md:block bg-[#144EE3] p-4 rounded-full">
             <FaBell size={20} color="white" />
           </div>
         </div>

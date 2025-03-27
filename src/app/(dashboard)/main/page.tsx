@@ -73,7 +73,7 @@ export default function Main() {
           <div className="flex justify-center items-center text-white gap-14  ">
             <div className="relative flex justify-center items-center gap-2 border-b-4 border-[#144EE3] p-5">
               <div className="absolute inset-x-0 top-0 h-0 shadow-[0_8px_16px_2px_#144EE3]"></div>
-              <div className="flex justify-center items-center gap-2">
+              <div className="flex justify-center items-center gap-2 cursor-pointer">
                 <div>
                   <Image
                     width={20}
@@ -82,16 +82,16 @@ export default function Main() {
                     alt="alarm"
                   />
                 </div>
-                <div className="text-white">History</div>
+                <div className="hidden md:block">History</div>
               </div>
             </div>
-            <div className="flex justify-center items-center gap-2 p-5">
+            <div className="flex justify-center items-center gap-2 p-5 cursor-pointer">
               <div>
                 <Image width={20} height={20} src={IMAGES.CHART} alt="alaram" />
               </div>
-              <div>Statistics</div>
+              <div className="hidden md:block">Statistics</div>
             </div>
-            <div className="flex justify-center items-center gap-2 p-5">
+            <div className="flex justify-center items-center gap-2 p-5 cursor-pointer">
               <div>
                 <Image
                   width={20}
@@ -100,7 +100,7 @@ export default function Main() {
                   alt="alaram"
                 />
               </div>
-              <div>Settings</div>
+              <div className="hidden md:block">Settings</div>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@ export default function Main() {
             <div>
               <Image src={IMAGES.FILTER} alt="filter" />
             </div>
-            <div>Filter</div>
+            <div className="hidden md:block">Filter</div>
           </div>
         </div>
         <div className="w-full  rounded-lg p-2 sm:p-4">

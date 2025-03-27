@@ -4,6 +4,7 @@ import { RootState } from "@/store/store";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useEffect, useState } from "react";
 import { LinkData } from "@/types/types";
+import { toast } from "react-toastify";
 export default function useTrialTable() {
   const { status } = useSession();
   const dispatch = useAppDispatch();
@@ -14,6 +15,9 @@ export default function useTrialTable() {
   const [editedStatus, setEditedStatus] = useState<"Active" | "Inactive">(
     "Active"
   );
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [copiedQrIndex, setCopiedQrIndex] = useState<number | null>(null);
+
   useEffect(() => {
     if (status === "unauthenticated") {
       dispatch(fetchUserUrls());
@@ -30,13 +34,14 @@ export default function useTrialTable() {
       return "/default-favicon.png";
     }
   };
-  const links: LinkData[] = urls.map((url) => ({
+
+  const links: LinkData[] = urls?.map((url) => ({
     shortLink: url.shortenedUrl,
     originalLink: url.originalUrl,
     clicks: url.clicks,
     date: url.createdAt,
     status: url.status,
-    qrCode: url.qrCode,
+    qrCode: url.qrCode ?? "",
   }));
 
   const handleCopy = (url: string, index: number) => {
@@ -51,6 +56,24 @@ export default function useTrialTable() {
       });
   };
 
+  const handleCopyQr = (qrCode: string, index: number) => {
+    navigator.clipboard
+      .writeText(qrCode)
+      .then(() => {
+        setCopiedQrIndex(index);
+        toast.success("QR Code URL copied to clipboard!");
+        setTimeout(() => setCopiedQrIndex(null), 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy QR code:", err);
+        toast.error("Failed to copy QR code URL");
+      });
+  };
+
+  const toggleExpand = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
   return {
     loading,
     error,
@@ -60,5 +83,9 @@ export default function useTrialTable() {
     getFaviconUrl,
     editedStatus,
     setEditedStatus,
+    toggleExpand,
+    expandedIndex,
+    copiedQrIndex,
+    handleCopyQr,
   };
 }
