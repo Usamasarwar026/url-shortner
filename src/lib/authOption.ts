@@ -3,7 +3,18 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import prisma from "./prismadb";
 
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name?: string | null;
+      email?: string | null;
+    };
+  }
+}
+
 export const authOptions: NextAuthOptions = {
+  debug: true,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -31,7 +42,7 @@ export const authOptions: NextAuthOptions = {
           user.password
         );
         if (!isValid) {
-          throw new Error("Invalid password");
+          throw new Error("Incorrect password");
         }
 
         return { id: user.id, email: user.email, name: user.username };
@@ -41,23 +52,9 @@ export const authOptions: NextAuthOptions = {
 
   pages: {
     signIn: "/login",
-    error: "/login",
   },
   session: {
     strategy: "jwt",
-  },
-  cookies: {
-    sessionToken: {
-      name: `__Secure-next-auth.session-token`,
-      options: {
-        httpOnly: true,
-        sameSite: "lax",
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-        domain:
-          process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
-      },
-    },
   },
   callbacks: {
     async jwt({ token, user }) {

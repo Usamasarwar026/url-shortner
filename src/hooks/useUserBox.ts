@@ -1,6 +1,7 @@
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function useUserBox() {
   const { data: session } = useSession();
@@ -27,7 +28,10 @@ export default function useUserBox() {
 
   const handleLogout = async () => {
     setIsDropdownOpen(false);
-    await signOut({ callbackUrl: "/" });
+    await signOut({ redirect: false, callbackUrl: "/" });
+    window.location.href = "/";
+
+    toast.success("Logged out successfully");
   };
   return {
     session,

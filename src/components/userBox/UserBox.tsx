@@ -13,6 +13,7 @@ export default function UserBox() {
     handleChangePassword,
     handleLogout,
   } = useUserBox();
+
   return (
     <div className="relative text-white border border-[#353C4A] bg-[#181E29] h-[70px] w-52 rounded-full flex justify-evenly items-center gap-5 px-5">
       <div>

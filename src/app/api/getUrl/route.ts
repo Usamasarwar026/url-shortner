@@ -31,7 +31,6 @@ export async function GET(req: NextRequest) {
       status: url.status,
       qrCode: url.qrCode,
     }));
-
     return NextResponse.json({ success: true, links }, { status: 200 });
   } catch (error) {
     console.error("[API] Error fetching user links:", error);

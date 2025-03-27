@@ -100,7 +100,7 @@ export const fetchUserUrls = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      return response.data.links;
+      return response.data.links || [];
     } catch (error) {
       const axiosError = error as AxiosError<{ message: string }>;
       if (axiosError.response) {

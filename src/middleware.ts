@@ -6,6 +6,14 @@ export default withAuth(
     const token = req.nextauth.token;
     const { pathname } = req.nextUrl;
 
+    const publicRoutes = [
+      "/",
+      "/login",
+      "/register",
+      "/forgetPassword",
+      "/resetPassword",
+    ];
+
     const protectedRoutes = [
       "/main",
       "/slugUrl",
@@ -13,43 +21,36 @@ export default withAuth(
       "/updatePassword",
     ];
 
-    const authRoutes = [
-      "/login",
-      "/register",
-      "/forgetPassword",
-      "/resetPassword",
-    ];
-
-    const isHomePage = pathname === "/";
-
-    const isProtectedRoute = protectedRoutes.some((route) =>
-      pathname.startsWith(route)
-    );
-
-    const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
-
-    if (!token && isProtectedRoute) {
+    if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
       const loginUrl = new URL("/login", req.url);
-      loginUrl.searchParams.set("callbackUrl", pathname);
+
       return NextResponse.redirect(loginUrl);
     }
 
-    if (token && (isAuthRoute || isHomePage)) {
+    if (token && publicRoutes.includes(pathname)) {
       return NextResponse.redirect(new URL("/main", req.url));
-    }
-
-    if (!token && (isAuthRoute || isHomePage)) {
-      return NextResponse.next();
     }
 
     return NextResponse.next();
   },
   {
-    // callbacks: {
-    //   authorized: ({ token }) => !!token,
-    // },
-    pages: {
-      signIn: "/login",
+    callbacks: {
+      authorized({ req, token }) {
+        const pathname = req.nextUrl.pathname;
+        const publicRoutes = [
+          "/",
+          "/login",
+          "/register",
+          "/forgetPassword",
+          "/resetPassword",
+        ];
+
+        if (publicRoutes.includes(pathname)) {
+          return true;
+        }
+
+        return !!token;
+      },
     },
   }
 );

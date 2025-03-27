@@ -11,7 +11,7 @@ const loginSchema = Yup.object({
     .required("Email is required"),
   password: Yup.string()
     .required("Password is required")
-    .min(6, "Password must be at least 6 characters"),
+    .min(3, "Password must be at least 6 characters"),
 });
 
 export default function useLoginForm() {
@@ -28,9 +28,9 @@ export default function useLoginForm() {
       await loginSchema.validate({ email, password }, { abortEarly: false });
 
       const login = await signIn("credentials", {
+        redirect: false,
         email,
         password,
-        redirect: false,
       });
       if (login?.error) {
         toast.error(login.error);

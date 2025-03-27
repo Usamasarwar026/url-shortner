@@ -38,9 +38,9 @@ export default function useSlugForm() {
       }
     } catch (error) {
       let errorMessage = "Error processing request";
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
       toast.error(errorMessage || "Slug alraedy in use");
     }
   };

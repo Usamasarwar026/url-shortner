@@ -43,11 +43,11 @@ export async function POST(req: NextRequest) {
       }
       shortCode = customSlug;
     }
-    const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+    const baseUrl = process.env.NEXTAUTH_URL;
     const shortenedUrl = `${baseUrl}/${shortCode}`;
     const qrCodeDataUrl = await QRCode.toDataURL(shortenedUrl);
     if (session && session.user?.id) {
-       await prismadb.shortUrl.create({
+      await prismadb.shortUrl.create({
         data: {
           originalUrl: url,
           shortCode,
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
           { status: 403 }
         );
       }
-       await prismadb.shortUrl.create({
+      await prismadb.shortUrl.create({
         data: {
           originalUrl: url,
           shortCode,
