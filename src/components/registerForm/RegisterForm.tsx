@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Input from "../input/Input";
-import useRegister from "@/hooks/useRegister";
+import useRegisterForm from "@/hooks/useRegisterForm";
 
 export default function RegisterForm() {
   const {
@@ -15,7 +15,7 @@ export default function RegisterForm() {
     setConfirmPassword,
     loading,
     handleRegister,
-  } = useRegister();
+  } = useRegisterForm();
   return (
     <>
       <div className="text-center w-full">

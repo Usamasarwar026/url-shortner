@@ -2,41 +2,45 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "./useRedux";
-import { ForgetPassword } from "@/store/slice/authSlice/authSlice";
+import { useRouter } from "next/navigation";
+import { UpdatePassword } from "@/store/slice/authSlice/authSlice";
 
-const registerSchema = Yup.object({
- email: Yup.string()
-     .email("Invalid email format")
-     .required("Email is required"),
+const updatePasswordSchema = Yup.object({
+  password: Yup.string().required("==password is required"),
+  newPassword: Yup.string()
+    .min(3, "New password must be at least 6 characters")
+    .required("New password is required"),
 });
 
-export default function useForgetPassword() {
-  const [email, setEmail] = useState("");
+export default function useUpdateForm() {
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { loading: reduxLoading } = useAppSelector((state) => state.auth);
+  const router = useRouter();
+  const {loading: reduxLoading} = useAppSelector(state => state.auth)
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-  const data ={
-   email
-  }
+    const data = { password, newPassword };
 
     try {
-      await registerSchema.validate(
-        { email },
+      await updatePasswordSchema.validate(
+        { password, newPassword},
         { abortEarly: false }
       );
       const result = await dispatch(
-        ForgetPassword(data)
+        UpdatePassword(data)
       ).unwrap();
       if (!result.success) {
         toast.error(result.message); 
         return;
       }
-      toast.success(result.message || "A reset link has been sent to your email.");
-      setEmail("");
+      toast.success(result.message || "Password updated successfully");
+      setPassword("");
+      setNewPassword("");
+      router.push('/login')
       
     } catch (error) {
       let errorMessage = "Error processing request";
@@ -55,8 +59,10 @@ export default function useForgetPassword() {
  
 
   return {
-   email,
-   setEmail,
+   password,
+   setPassword,
+   newPassword,
+   setNewPassword,
     handleUpdatePassword,
     loading: loading || reduxLoading,
   };

@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import Input from "../input/Input";
-import useForgetPassword from "@/hooks/useForgetPassword";
+import useForgetForm from "@/hooks/useForgetForm";
 
 export default function ForgetForm() {
   const { email, setEmail, handleUpdatePassword, loading } =
-    useForgetPassword();
+    useForgetForm();
   return (
     <>
       <div className="text-center w-full">

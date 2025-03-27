@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function useSlugUrl() {
+export default function useSlugForm() {
   const dispatch = useAppDispatch();
   const { status } = useSession();
   const [originalUrl, setOriginalUrl] = useState("");

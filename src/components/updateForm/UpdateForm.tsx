@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Input from "../input/Input";
-import useUpdatePassword from "@/hooks/useUpdatePassword";
+import useUpdateForm from "@/hooks/useUpdateForm";
 
 export default function UpdateForm() {
   const {
@@ -11,7 +11,7 @@ export default function UpdateForm() {
     setNewPassword,
     handleUpdatePassword,
     loading,
-  } = useUpdatePassword();
+  } = useUpdateForm();
   return (
     <>
       <div className="text-center w-full">

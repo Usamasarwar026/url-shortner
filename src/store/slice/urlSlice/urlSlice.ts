@@ -42,7 +42,7 @@ export const editUrl = createAsyncThunk(
       originalUrl,
       status,
     }: {
-      shortCode: string ;
+      shortCode: string;
       originalUrl: string;
       status: "Active" | "Inactive";
     },
@@ -72,9 +72,9 @@ export const editUrl = createAsyncThunk(
 
 export const deleteUrl = createAsyncThunk(
   "url/deleteUrl",
-  async (shortCode: string , { rejectWithValue }) => {
+  async (shortCode: string, { rejectWithValue }) => {
     try {
-       await axios.delete("/api/deleteUrl", {
+      await axios.delete("/api/deleteUrl", {
         data: { shortCode },
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
@@ -135,8 +135,10 @@ export const shortUrl = createAsyncThunk(
         return rejectWithValue(
           "Guest limit reached. Please log in to continue."
         );
-      }else if(axiosError.response?.status === 409){
-        return rejectWithValue("Custom slug is already in use. Please choose another.");
+      } else if (axiosError.response?.status === 409) {
+        return rejectWithValue(
+          "Custom slug is already in use. Please choose another."
+        );
       }
       return rejectWithValue({ message: "An unexpected error occurred" });
     }
@@ -146,8 +148,7 @@ export const shortUrl = createAsyncThunk(
 export const urlSlice = createSlice({
   name: "url",
   initialState,
-  reducers: {
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(shortUrl.pending, (state) => {
@@ -156,7 +157,6 @@ export const urlSlice = createSlice({
       })
       .addCase(shortUrl.fulfilled, (state) => {
         state.loading = false;
-        
       })
       .addCase(shortUrl.rejected, (state, action) => {
         state.loading = false;
@@ -181,7 +181,9 @@ export const urlSlice = createSlice({
       .addCase(deleteUrl.fulfilled, (state, action) => {
         state.loading = false;
         const shortCode = action.payload;
-        state.urls = state.urls.filter((url) => !url.shortenedUrl.includes(shortCode));
+        state.urls = state.urls.filter(
+          (url) => !url.shortenedUrl.includes(shortCode)
+        );
       })
       .addCase(deleteUrl.rejected, (state, action) => {
         state.loading = false;
@@ -194,7 +196,9 @@ export const urlSlice = createSlice({
       .addCase(editUrl.fulfilled, (state, action) => {
         state.loading = false;
         const updatedUrl = action.payload;
-        const index = state.urls.findIndex((url) => url.shortenedUrl.includes(updatedUrl.shortCode));
+        const index = state.urls.findIndex((url) =>
+          url.shortenedUrl.includes(updatedUrl.shortCode)
+        );
         if (index !== -1) {
           state.urls[index] = {
             ...state.urls[index],

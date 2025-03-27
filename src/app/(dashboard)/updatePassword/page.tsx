@@ -1,4 +1,4 @@
-import UpdateForm from "@/components/updateFrom/UpdateForm";
+import UpdateForm from "@/components/updateForm/UpdateForm";
 import { IMAGES } from "@/constant/images";
 
 export default function UpdatePassword() {

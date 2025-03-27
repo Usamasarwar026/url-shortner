@@ -2,45 +2,41 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "./useRedux";
-import { useRouter } from "next/navigation";
-import { UpdatePassword } from "@/store/slice/authSlice/authSlice";
+import { ForgetPassword } from "@/store/slice/authSlice/authSlice";
 
-const updatePasswordSchema = Yup.object({
-  password: Yup.string().required("==password is required"),
-  newPassword: Yup.string()
-    .min(3, "New password must be at least 6 characters")
-    .required("New password is required"),
+const registerSchema = Yup.object({
+ email: Yup.string()
+     .email("Invalid email format")
+     .required("Email is required"),
 });
 
-export default function useUpdatePassword() {
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+export default function useForgetForm() {
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const router = useRouter();
-  const {loading: reduxLoading} = useAppSelector(state => state.auth)
+  const { loading: reduxLoading } = useAppSelector((state) => state.auth);
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const data = { password, newPassword };
+  const data ={
+   email
+  }
 
     try {
-      await updatePasswordSchema.validate(
-        { password, newPassword},
+      await registerSchema.validate(
+        { email },
         { abortEarly: false }
       );
       const result = await dispatch(
-        UpdatePassword(data)
+        ForgetPassword(data)
       ).unwrap();
       if (!result.success) {
         toast.error(result.message); 
         return;
       }
-      toast.success(result.message || "Password updated successfully");
-      setPassword("");
-      setNewPassword("");
-      router.push('/login')
+      toast.success(result.message || "A reset link has been sent to your email.");
+      setEmail("");
       
     } catch (error) {
       let errorMessage = "Error processing request";
@@ -59,10 +55,8 @@ export default function useUpdatePassword() {
  
 
   return {
-   password,
-   setPassword,
-   newPassword,
-   setNewPassword,
+   email,
+   setEmail,
     handleUpdatePassword,
     loading: loading || reduxLoading,
   };

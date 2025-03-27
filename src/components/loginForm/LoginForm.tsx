@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import Input from "../input/Input";
-import useLogin from "@/hooks/useLogin";
+import useLoginForm from "@/hooks/useLoginForm";
 
 export default function LoginForm() {
   const { email, password, handleLogin, setEmail, setPassword, loading } =
-    useLogin();
+    useLoginForm();
   return (
     <>
       <div className="text-center w-full ">

@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import Input from "../input/Input";
-import useResetPassword from "@/hooks/useResetPassword";
+import useResetForm from "@/hooks/useResetForm";
 
 export default function ResetForm() {
   const { password, setPassword, handleResetPassword, loading } =
-    useResetPassword();
+    useResetForm();
   return (
     <>
       <div className="text-center w-full">

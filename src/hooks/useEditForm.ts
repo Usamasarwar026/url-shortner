@@ -15,7 +15,7 @@ const profileSchema = Yup.object({
     .required("Username is required"),
 });
 
-export default function useEditProfile() {
+export default function useEditForm() {
   const { data: session, update } = useSession();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");

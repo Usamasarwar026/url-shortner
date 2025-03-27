@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import Input from "../input/Input";
-import useEditProfile from "@/hooks/useEditProfile";
+import useEditForm from "@/hooks/useEditForm";
 
 export default function EditForm() {
   const { email, setEmail, username, setUsername, handleUpdate, loading } =
-    useEditProfile();
+    useEditForm();
   return (
     <>
       <div className="text-center w-full">

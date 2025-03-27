@@ -10,7 +10,7 @@ const registerSchema = Yup.object({
     .required("Password is required"),
 });
 
-export default function useResetPassword() {
+export default function useResetForm() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();

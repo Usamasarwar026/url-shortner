@@ -21,7 +21,7 @@ const registerSchema = Yup.object({
     .required("Confirm password is required"),
 });
 
-export default function useRegister() {
+export default function useRegisterForm() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

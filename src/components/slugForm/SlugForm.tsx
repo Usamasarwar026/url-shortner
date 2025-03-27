@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import ButtonInput from "../buttonInput/ButtonInput";
-import useSlugUrl from "@/hooks/useSlugUrl";
 import Button from "../button/Button";
+import useSlugForm from "@/hooks/useSlugForm";
 
 export default function SlugForm() {
   const {
@@ -12,7 +12,7 @@ export default function SlugForm() {
     setCustomSlug,
     handleGenerateSlug,
     handleShortenUrl,
-  } = useSlugUrl();
+  } = useSlugForm();
   return (
     <>
       <div className="flex flex-col gap-4 items-center justify-center  w-full">

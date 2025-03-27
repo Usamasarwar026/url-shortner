@@ -3,7 +3,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const loginSchema = Yup.object({
   email: Yup.string()
@@ -14,13 +14,11 @@ const loginSchema = Yup.object({
     .min(6, "Password must be at least 6 characters"),
 });
 
-export default function useLogin() {
+export default function useLoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  // const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/main";
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,14 +31,12 @@ export default function useLogin() {
         email,
         password,
         redirect: false,
-         callbackUrl: callbackUrl || '/main'
       });
       if (login?.error) {
         toast.error(login.error);
       } else if (login?.ok) {
         toast.success("Login successful");
-        // router.push("/main");
-        window.location.href = login.url || callbackUrl;
+        router.push("/main");
       } else {
         toast.error("Something went wrong during login");
       }
