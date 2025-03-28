@@ -96,8 +96,15 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full  rounded-lg p-2 sm:p-4 mx-auto mt-10">
+      <div className="w-[90%] rounded-lg p-2 sm:p-4 mx-auto mt-10 mb-9">
         <TrialTable />
+      </div>
+      <div className="overflow-x-auto fixed bottom-0 left-0 right-0 z-50 text-sm text-gray-400 text-center py-4 bg-[#181E29]/20 backdrop-blur-sm">
+       
+        <Link href="./signup" className="text-blue-500 hover:underline">
+          Register
+        </Link>
+        {" "}to enjoy Unlimited History?
       </div>
     </div>
   );

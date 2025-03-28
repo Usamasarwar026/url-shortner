@@ -30,9 +30,9 @@ export default function TrialTable() {
       {loading && <Loader />}
 
       <div className="hidden sm:block overflow-x-auto">
-        <table className="min-w-full text-xs sm:text-sm md:text-base">
+        <table className="min-w-full">
           <thead>
-            <tr className="border-b border-gray-800 bg-[#181E29] text-[#C9CED6]">
+            <tr className="border-b border-gray-800 bg-[#181E29] text-[#C9CED6] text-xs sm:text-sm md:text-[15] font-[700px]">
               <th className="py-4 px-4 text-left">Short Link</th>
               <th className="py-4 px-4 text-left">Original Link</th>
               <th className="py-4 px-4 text-center">QR Code</th>
@@ -46,7 +46,7 @@ export default function TrialTable() {
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className=" text-xs sm:text-sm md:text-[14px] font-[300px]">
             {links.length === 0 && !loading && !error ? (
               <tr>
                 <td
@@ -69,7 +69,7 @@ export default function TrialTable() {
                       </span>
                       <button
                         onClick={() => handleCopy(link.shortLink, index)}
-                        className="text-[#C9CED6] hover:text-white relative"
+                        className="text-[#C9CED6] bg-[#181E29] p-2 rounded-full hover:text-white relative"
                       >
                         <MdContentCopy size={18} />
                         {copiedIndex === index && (

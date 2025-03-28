@@ -115,7 +115,7 @@ export default function Main() {
             <div className="hidden md:block">Filter</div>
           </div>
         </div>
-        <div className="w-full  rounded-lg p-2 sm:p-4">
+        <div className="w-[90%]  rounded-lg p-2 sm:p-4">
           <LinkBox />
         </div>
       </div>
