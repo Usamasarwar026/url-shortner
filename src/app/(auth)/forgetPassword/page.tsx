@@ -15,11 +15,11 @@ export default function ForgetPassword() {
         </h2>
       </div>
       <div className="flex flex-col gap-4 items-center w-full">
-        <div className="font-[800] text-[35px] md:text-[50px] bg-custom-gradient text-center text-transparent bg-clip-text">
+        <div className="font-[800] text-[35px] md:text-[50px] px-2 bg-custom-gradient text-center text-transparent bg-clip-text">
           Reset Your Password
         </div>
 
-        <p className="font-[300] text-[14px] md:text-[16px] text-center text-[#C9CED6] mx-7">
+        <p className="font-[300] text-[14px] md:text-[16px] px-2 text-center text-[#C9CED6] mx-7">
           You can easily reset your password through Email
         </p>
         <ForgetForm />

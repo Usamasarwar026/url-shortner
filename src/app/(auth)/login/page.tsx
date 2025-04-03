@@ -16,11 +16,11 @@ export default function Login() {
         </h2>
       </div>
       <div className="flex flex-col gap-4  items-center justify-center  w-full">
-        <div className="font-[800] text-[35px] md:text-[50px] bg-custom-gradient  text-center text-transparent bg-clip-text">
+        <div className="font-[800] text-[35px] md:text-[50px] bg-custom-gradient px-2  text-center text-transparent bg-clip-text">
           Shorten Your Loooong Links :)
         </div>
 
-        <p className="font-[300] text-[14px] md:text-[16px] text-center  text-[#C9CED6]">
+        <p className="font-[300] text-[14px] md:text-[16px] text-center px-2 text-[#C9CED6]">
           Linkly is an efficient and easy-to-use URL shortening service that
           streamlines your online experience.
         </p>
