@@ -37,25 +37,25 @@ export default function UserBox() {
           <ul className="py-2">
             <li
               onClick={handleEditProfile}
-              className="px-4 py-2 hover:bg-[#353C4A] cursor-pointer text-white"
+              className="px-4 py-2 text-[14px] md:text-[16px] hover:bg-[#353C4A] cursor-pointer text-white"
             >
               Edit Profile
             </li>
             <li
               onClick={handleEditURL}
-              className="px-4 py-2 hover:bg-[#353C4A] cursor-pointer text-white"
+              className="px-4 py-2 text-[14px] md:text-[16px] hover:bg-[#353C4A] cursor-pointer text-white"
             >
               Edit URL
             </li>
             <li
               onClick={handleChangePassword}
-              className="px-4 py-2 hover:bg-[#353C4A] cursor-pointer text-white"
+              className="px-4 py-2 text-[14px] md:text-[16px] hover:bg-[#353C4A] cursor-pointer text-white"
             >
               Change Password
             </li>
             <li
               onClick={handleLogout}
-              className="px-4 py-2 hover:bg-[#353C4A] cursor-pointer text-white"
+              className="px-4 py-2 text-[14px] md:text-[16px] hover:bg-[#353C4A] cursor-pointer text-white"
             >
               Logout
             </li>

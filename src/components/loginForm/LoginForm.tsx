@@ -27,7 +27,7 @@ export default function LoginForm() {
       <button
         onClick={handleLogin}
         disabled={loading}
-        className={`flex items-center justify-center w-[260px] h-[60px] font-semibold text-[20px] text-white bg-[#144EE3] border-[#144EE3] rounded-full hover:bg-[#273e92] transition shadow-md ${
+        className={`flex items-center justify-center w-[220px] h-[50px] md:w-[260px] md:h-[60px] font-semibold text-[16px] md:text-[20px] text-white bg-[#144EE3] border-[#144EE3] rounded-full hover:bg-[#273e92] transition shadow-md ${
           loading ? "cursor-not-allowed opacity-70" : ""
         }`}
       >

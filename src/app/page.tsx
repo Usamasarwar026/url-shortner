@@ -44,11 +44,11 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-col gap-4 items-center justify-center px-[30px] w-full">
-        <div className="font-[800] text-[50px] bg-custom-gradient text-center text-transparent bg-clip-text">
+        <div className="font-[800] text-[35px] md:text-[50px] bg-custom-gradient text-center text-transparent bg-clip-text">
           Shorten Your Loooong Links :)
         </div>
 
-        <div className="font-[300] text-[16px] text-center text-[#C9CED6]">
+        <div className="font-[300] text-[14px] md:text-[16px] text-center text-[#C9CED6]">
           Linkly is an efficient and easy-to-use URL shortening service that
           streamlines your online experience.
         </div>
@@ -75,10 +75,10 @@ export default function Home() {
               }`}
             ></div>
           </div>
-          <div className="text-white ml-3">Auto Paste from Clipboard</div>
+          <div className="text-white ml-3 text-[14px] md:text-[16px]">Auto Paste from Clipboard</div>
         </div>
         <div className="flex items-center justify-center flex-wrap px-5">
-          <div className="text-white text-center">
+          <div className="text-white text-center text-[14px] md:text-[16px]">
             You can create <span className="text-[#EB568E] font-bold">05</span>{" "}
             more links.
           </div>

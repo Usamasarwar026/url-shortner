@@ -8,7 +8,7 @@ import Image from "next/image";
 import { FaBell } from "react-icons/fa";
 
 export default function Main() {
-  const { toggleSwitch, isToggled, handleUrl, loading, urlinput, setUrlinput } =
+  const { toggleSwitch, isToggled, handleUrl, loading, urlinput, setUrlinput, TotalUrl } =
     useMain();
   return (
     <div
@@ -19,7 +19,7 @@ export default function Main() {
     >
       <div className="flex justify-between items-center mt-5 mx-9 mb-[80px]">
         <div>
-          <Image src={IMAGES.LINKLY} alt="Link" />
+          <Image src={IMAGES.LINKLY} alt="Link" className="w-[90px] md:w-[100px]" />
         </div>
 
         <div className=" w-full hidden md:hidden lg:flex justify-center ">
@@ -58,16 +58,16 @@ export default function Main() {
       <div className="flex flex-col gap-4 items-center justify-center ">
         <div className="flex items-center px-[30px]">
           <div
-            className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer transition-all duration-300 border border-[#353C4A]  bg-[#181E29]`}
+            className={`h-7 w-16 md:h-8 flex items-center rounded-full p-1 cursor-pointer transition-all duration-300 border border-[#353C4A]  bg-[#181E29]`}
             onClick={toggleSwitch}
           >
             <div
-              className={`w-6 h-6 bg-[#144EE3] rounded-full shadow-md transition-transform duration-300 ${
+              className={`w-5 h-5 md:w-6 md:h-6 bg-[#144EE3] rounded-full shadow-md transition-transform duration-300 ${
                 isToggled ? "translate-x-8" : "translate-x-0"
               }`}
             ></div>
           </div>
-          <div className="text-white ml-3">Auto Paste from Clipboard</div>
+          <div className="text-white ml-3 text-[14px] md:text-[16px] ">Auto Paste from Clipboard</div>
         </div>
         <div className="bg-[#181E29] mx-0 w-full flex justify-center items-center text-white gap-14  ">
           <div className="flex justify-center items-center text-white gap-14  ">
@@ -104,9 +104,9 @@ export default function Main() {
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-center w-full px-10 md:px-36 text-white">
+        <div className="flex justify-between items-center w-full px-14 md:px-20  text-white text-[14px] md:text-[16px] ">
           <div>
-            History <span>(401)</span>
+            History <span>({TotalUrl})</span>
           </div>
           <div className="flex items-center justify-center border border-[#353C4A] bg-[#181E29] py-3 px-5 rounded-full gap-2">
             <div>
@@ -115,7 +115,7 @@ export default function Main() {
             <div className="hidden md:block">Filter</div>
           </div>
         </div>
-        <div className="w-[90%]  rounded-lg p-2 sm:p-4">
+        <div className="w-[90%]  rounded-lg px-2 sm:p-4">
           <LinkBox />
         </div>
       </div>

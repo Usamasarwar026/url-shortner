@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useAppDispatch} from "./useRedux";
+import { useAppDispatch, useAppSelector} from "./useRedux";
 import { shortUrl } from "@/store/slice/urlSlice/urlSlice";
 
 export default function useMain() {
@@ -11,9 +11,13 @@ export default function useMain() {
   const [loading, setLoading] = useState(false);
   const [urlinput, setUrlinput] = useState("");
   const dispatch = useAppDispatch();
+  const { urls } = useAppSelector((state) => state.url);
   const toggleSwitch = () => {
     setIsToggled(!isToggled);
   };
+
+
+  const TotalUrl = urls.length;
   const handleUrl = async (url: string) => {
     if (!url) {
       setError("enter url");
@@ -55,6 +59,7 @@ export default function useMain() {
     session,
     status,
     urlinput,
-    setUrlinput
+    setUrlinput,
+    TotalUrl
   };
 }
