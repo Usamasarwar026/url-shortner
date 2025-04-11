@@ -123,13 +123,16 @@ export default function useLinkBox() {
 
   const getFaviconUrl = (url: string): string => {
     try {
+      if (!url || url.includes("localhost") || url.includes("127.0.0.1")) {
+        return "/vercel.svg";
+      }
       const { hostname } = new URL(
         url.includes("://") ? url : `https://${url}`
       );
       return `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
     } catch (error) {
       console.error("Invalid URL:", url, error);
-      return "/default-favicon.png";
+      return "/vercel.svg";
     }
   };
   const toggleExpand = (index: number) => {
