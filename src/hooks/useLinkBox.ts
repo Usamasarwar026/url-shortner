@@ -123,7 +123,12 @@ export default function useLinkBox() {
 
   const getFaviconUrl = (url: string): string => {
     try {
-      if (!url || typeof url !== "string" || url.includes("localhost") || url.includes("127.0.0.1")) {
+      if (
+        !url ||
+        url.includes("url-smoky.vercel.app") ||
+        url.includes("localhost") ||
+        url.includes("127.0.0.1")
+      ) {
         return "/vercel.svg";
       }
       const { hostname } = new URL(
